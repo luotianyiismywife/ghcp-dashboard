@@ -1,7 +1,5 @@
 /*
  * ----------------------------------------------------------------------------
- * Author      : Jadhav Shubhamm
- * Role        : AI Developer
  * Created On  : 27-Feb-2026
  * Description : Extension entry point for the GHCP Account & Usage Dashboard.
  *               Registers the sidebar webview provider, dashboard panel
@@ -16,7 +14,6 @@
  *                     - Auth session change listener (auto-refresh)
  *     deactivate() - Called when the extension is deactivated
  *
- * \u00a9 2026 All rights reserved.
  * ----------------------------------------------------------------------------
  */
 const vscode = require('vscode');

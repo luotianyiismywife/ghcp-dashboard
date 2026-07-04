@@ -1,7 +1,5 @@
 /*
  * ----------------------------------------------------------------------------
- * Author      : Jadhav Shubhamm
- * Role        : AI Developer
  * Created On  : 27-Feb-2026
  * Description : Fetches all account, authentication, MCP server, Copilot,
  *               language model, tool, and AI stats data from VS Code APIs
@@ -27,7 +25,6 @@
  *     getContextAnalysis()         - Computes context window token analysis
  *     getAllData()                 - Aggregates all data into a single object
  *
- * \u00a9 2026 All rights reserved.
  * ----------------------------------------------------------------------------
  */
 const vscode = require('vscode');

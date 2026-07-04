@@ -1,7 +1,5 @@
 /*
  * ----------------------------------------------------------------------------
- * Author      : Jadhav Shubhamm
- * Role        : AI Developer
  * Created On  : 27-Feb-2026
  * Description : Sidebar webview provider for the GHCP Dashboard extension.
  *               Renders a compact sidebar view showing weekly AI metrics,
@@ -17,7 +15,6 @@
  *     getNonce()    - Generates a random nonce for CSP
  *     escapeHtml()  - HTML-escapes strings for safe rendering
  *
- * \u00a9 2026 All rights reserved.
  * ----------------------------------------------------------------------------
  */
 const vscode = require('vscode');

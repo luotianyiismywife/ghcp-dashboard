@@ -2,7 +2,7 @@
 
 > 在 VS Code 内部查看 GitHub Copilot 账户、AI 用量统计、聊天会话历史、MCP 服务器连接和语言模型——一站式面板。
 
-> **来源：** 本扩展源自 Jadhav Shubhamm 开发的 **GitHub Copilot Insights Dashboard** VS Code 扩展（v2.0.4）。原仓库 [`shujadhav/ghcp-dashboard`](https://github.com/shujadhav/ghcp-dashboard) 及原作者账号均已不复存在，当前仓库为从 VSIX 包提取的延续版本，遵循 MIT 许可协议。所有源代码版权归原作者所有。
+> **来源：** 本扩展源自 Jadhav Shubhamm 开发的 **GitHub Copilot Insights Dashboard** VS Code 扩展（v2.0.4）。原仓库 [`shujadhav/ghcp-dashboard`](https://github.com/shujadhav/ghcp-dashboard) 及原作者账号均已不复存在，当前仓库为从 VSIX 包提取的延续版本，遵循 MIT 许可协议。
 
 ---
 

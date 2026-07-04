@@ -1,14 +1,11 @@
 /*
  * ----------------------------------------------------------------------------
- * Author      : Jadhav Shubhamm
- * Role        : AI Developer
  * Created On  : 28-Feb-2026
  * Description : Test suite for GHCP Dashboard data validation.
  *               Reads VS Code state databases directly (no vscode module needed)
  *               and validates all data that the dashboard displays.
  *
  * Usage:  node test_ai_stats.js
- * © 2026 All rights reserved.
  * ----------------------------------------------------------------------------
  */
 const fs = require('fs');
