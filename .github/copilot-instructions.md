@@ -12,6 +12,14 @@
 - `dev` 分支用于日常开发，所有提交先推到 dev
 - `master` 分支仅用于稳定版本，dev 测试通过后再合并到 master
 - **禁止在开发过程中反复推送中间提交** — 完成任务后再一次性 commit + push
+- **`.github/` 和 `结构表/` 内容仅在 dev 上存在**，合并到 master 时需手动排除：
+  ```bash
+  git checkout master
+  git merge --no-commit dev
+  git restore --staged .github/ 结构表/
+  git checkout HEAD -- .github/ 结构表/
+  git commit
+  ```
 
 ## 技术栈
 
