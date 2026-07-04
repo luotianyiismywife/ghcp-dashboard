@@ -222,13 +222,13 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
                 <p style="font-size:11px;color:var(--vscode-descriptionForeground);margin:4px 0 8px;">${vscode.l10n.t('Could not load GitHub Copilot Insights Dashboard data')}</p>
                 <div class="error-detail">${escapeHtml(err.message || 'Unknown error')}</div>
                 <div class="help">
-                    <strong>What you can try:</strong><br>
-                    • Click <strong>Retry</strong> below<br>
-                    • Restart VS Code (<code>Ctrl+Shift+P</code> → <code>Reload Window</code>)<br>
-                    • Check that GitHub Copilot Chat is installed<br>
-                    • Verify <code>editor.aiStats.enabled</code> is <code>true</code><br><br>
-                    <strong>Still having issues?</strong><br>
-                    Please verify the extension version or contact admin:<br>
+                    <strong>${vscode.l10n.t('What you can try:')}</strong><br>
+                    • ${vscode.l10n.t('Click Retry below')}<br>
+                    • ${vscode.l10n.t('Restart VS Code (Ctrl+Shift+P → Reload Window)')}<br>
+                    • ${vscode.l10n.t('Check that GitHub Copilot Chat is installed')}<br>
+                    • ${vscode.l10n.t('Verify editor.aiStats.enabled is true')}<br><br>
+                    <strong>${vscode.l10n.t('Still having issues?')}</strong><br>
+                    ${vscode.l10n.t('Please verify the extension version or contact admin:')}<br>
                     <a href="mailto:sj.techconnect@gmail.com">sj.techconnect@gmail.com</a>
                 </div>
                 <button class="btn" data-command="refresh">↻ ${vscode.l10n.t('Retry')}</button>
@@ -253,16 +253,16 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
 
         // Pick 2 random CodeFox sayings for the footer
         const foxSayings = [
-            '"Thinking smarter is always faster than working harder."',
-            '"Behind every great outcome is intelligent assistance."',
-            '"Patterns reveal answers before logic does."',
-            '"Innovation starts with asking better questions."',
-            '"The future belongs to collaborative intelligence."',
-            '"Let intelligence do the heavy lifting."',
-            '"Insight precedes innovation."',
-            '"Smart thinking scales impact."',
-            '"Learning never pauses."',
-            '"Every moment is a chance to optimize."'
+            vscode.l10n.t('"Thinking smarter is always faster than working harder."'),
+            vscode.l10n.t('"Behind every great outcome is intelligent assistance."'),
+            vscode.l10n.t('"Patterns reveal answers before logic does."'),
+            vscode.l10n.t('"Innovation starts with asking better questions."'),
+            vscode.l10n.t('"The future belongs to collaborative intelligence."'),
+            vscode.l10n.t('"Let intelligence do the heavy lifting."'),
+            vscode.l10n.t('"Insight precedes innovation."'),
+            vscode.l10n.t('"Smart thinking scales impact."'),
+            vscode.l10n.t('"Learning never pauses."'),
+            vscode.l10n.t('"Every moment is a chance to optimize."')
         ];
         const shuffled = foxSayings.sort(() => Math.random() - 0.5);
         const foxQuote1 = shuffled[0];
@@ -449,16 +449,15 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
             <div class="section-body" data-section-body="recent-sessions">
             ${recentSessions.length === 0 ? `<div class="empty-state" style="padding:6px;font-size:10px;">${vscode.l10n.t('No sessions in this workspace')}</div>` : recentSessions.map(s => {
                 const title = escapeHtml(s.title || vscode.l10n.t('Untitled Session'));
-                const typeLabel = (s.chatType === 'agent' || s.source === 'agentSession') ? 'Agent' : s.chatType === 'ask' ? 'Ask' : 'Chat';
-                const typeLabel = (s.chatType === 'agent' || s.source === 'agentSession') ? 'Agent' : s.chatType === 'ask' ? 'Ask' : 'Chat';
+                const typeLabel = (s.chatType === 'agent' || s.source === 'agentSession') ? vscode.l10n.t('Agent') : s.chatType === 'ask' ? vscode.l10n.t('Ask') : vscode.l10n.t('Chat');
                 const dateObj = new Date(s.lastMessageDate || s.creationDate);
-                const timeAgo = (() => { const d = Date.now() - dateObj.getTime(); if (d < 60000) return 'just now'; if (d < 3600000) return Math.floor(d / 60000) + 'm ago'; if (d < 86400000) return Math.floor(d / 3600000) + 'h ago'; return Math.floor(d / 86400000) + 'd ago'; })();
+                const timeAgo = (() => { const d = Date.now() - dateObj.getTime(); if (d < 60000) return vscode.l10n.t('just now'); if (d < 3600000) return Math.floor(d / 60000) + vscode.l10n.t('m ago'); if (d < 86400000) return Math.floor(d / 3600000) + vscode.l10n.t('h ago'); return Math.floor(d / 86400000) + vscode.l10n.t('d ago'); })();
                 return `<div class="sidebar-session-row">
                     <div class="sidebar-session-info">
                         <div class="sidebar-session-title" title="${title}">${title}</div>
-                        <div class="sidebar-session-meta"><span style="font-size:8px;padding:1px 4px;border-radius:3px;background:var(--ghcp-subtle-bg);color:var(--vscode-descriptionForeground);">${typeLabel}</span> <span>${timeAgo}</span> <span>${s.messageCount || 0} msgs</span></div>
+                        <div class="sidebar-session-meta"><span style="font-size:8px;padding:1px 4px;border-radius:3px;background:var(--ghcp-subtle-bg);color:var(--vscode-descriptionForeground);">${typeLabel}</span> <span>${timeAgo}</span> <span>${s.messageCount || 0} ${vscode.l10n.t('msgs')}</span></div>
                     </div>
-                    <button class="sidebar-open-btn" data-command="openChatSession" data-session-id="${escapeHtml(s.sessionId)}" data-session-title="${title}" title="Open session"><span style="font-size:10px;">▶</span></button>
+                    <button class="sidebar-open-btn" data-command="openChatSession" data-session-id="${escapeHtml(s.sessionId)}" data-session-title="${title}" title="${vscode.l10n.t('Open session')}"><span style="font-size:10px;">▶</span></button>
                 </div>`;
             }).join('')}
             </div>
@@ -467,17 +466,17 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
 
         <!-- Models -->
         <div class="section">
-            <div class="section-header" data-section="models"><span class="codicon codicon-hubot"></span> Models (${data.languageModels.length})<span class="chevron"></span></div>
+            <div class="section-header" data-section="models"><span class="codicon codicon-hubot"></span> ${vscode.l10n.t('Models')} (${data.languageModels.length})<span class="chevron"></span></div>
             <div class="section-body" data-section-body="models">
-            <div class="stat-row"><span class="stat-row-label">Available</span><span class="stat-row-val">${data.languageModels.length}</span></div>
-            ${data.languageModels.length > 0 ? `<div class="stat-row"><span class="stat-row-label">Top Model</span><span class="stat-row-val" style="font-size:10px;">${escapeHtml((data.languageModels[0].name || data.languageModels[0].family))}</span></div>` : ''}
+            <div class="stat-row"><span class="stat-row-label">${vscode.l10n.t('Available')}</span><span class="stat-row-val">${data.languageModels.length}</span></div>
+            ${data.languageModels.length > 0 ? `<div class="stat-row"><span class="stat-row-label">${vscode.l10n.t('Top Model')}</span><span class="stat-row-val" style="font-size:10px;">${escapeHtml((data.languageModels[0].name || data.languageModels[0].family))}</span></div>` : ''}
             </div>
         </div>
 
         ${data.mcpServers.length > 0 ? `
         <!-- MCP Servers -->
         <div class="section">
-            <div class="section-header" data-section="mcp-servers"><span class="codicon codicon-plug"></span> MCP Servers (${data.mcpServers.length})<span class="chevron"></span></div>
+            <div class="section-header" data-section="mcp-servers"><span class="codicon codicon-plug"></span> ${vscode.l10n.t('MCP Servers')} (${data.mcpServers.length})<span class="chevron"></span></div>
             <div class="section-body" data-section-body="mcp-servers">
             ${mcpHtml}
             </div>
@@ -486,7 +485,7 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
     `}
 </div>
 <div id="loadingToast" class="loading-toast">
-    <span class="toast-spinner">🦊</span>Refreshing data\u2026
+    <span class="toast-spinner">🦊</span>${vscode.l10n.t('Refreshing data\u2026')}
     <div class="toast-msg" id="toastMsg"></div>
 </div>
 <div class="sticky-footer">
@@ -494,12 +493,12 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
         <button class="btn btn-primary" data-command="openDashboard"><span class="codicon codicon-graph"></span> ${vscode.l10n.t('Open Full Dashboard')}</button>
         <button class="btn btn-primary" data-command="refresh"><span class="codicon codicon-refresh"></span> ${vscode.l10n.t('Refresh')}</button>
     </div>
-    <div class="timestamp" data-updated-at="${data.timestamp}" title="&#x1f7e2; Green = Data is fresh (under 5 min)&#10;&#x1f7e0; Amber = Data may be stale (over 5 min) &#8212; click Refresh to update"><span class="freshness-dot" id="freshnessDot"></span>Updated: ${new Date(data.timestamp).toLocaleTimeString()}</div>
+    <div class="timestamp" data-updated-at="${data.timestamp}" title="${vscode.l10n.t('🟢 Green = Data is fresh (under 5 min)')}&#10;${vscode.l10n.t('🟠 Amber = Data may be stale (over 5 min) — click Refresh to update')}"><span class="freshness-dot" id="freshnessDot"></span>${vscode.l10n.t('Updated: ')}${new Date(data.timestamp).toLocaleTimeString()}</div>
     <div style="margin:6px 0 4px;text-align:center;font-size:10px;color:var(--vscode-descriptionForeground);font-style:italic;line-height:1.5;">
         <div>${foxQuote1} — 🦊</div>
     </div>
     <div style="text-align:center;font-size:8px;color:var(--vscode-descriptionForeground);margin-top:2px;">
-        <div>🦊 CodeFox — 🚀 Driving AI-Powered Delivery Excellence</div>
+        <div>${vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 \ud83d\ude80 Driving AI-Powered Delivery Excellence')}</div>
     </div>
 </div>
 <script nonce="${nonce}">
@@ -518,7 +517,7 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
                 var btn = target;
                 btn.disabled = true;
                 btn.style.opacity = '0.6';
-                btn.innerHTML = '<span class="codicon codicon-sync"></span> Refreshing\u2026';
+                btn.innerHTML = '<span class="codicon codicon-sync"></span> ' + vscode.l10n.t('Refreshing\u2026');
             }
             post(cmd, target.getAttribute('data-arg') || undefined);
         }
@@ -561,7 +560,7 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
             btns.forEach(function(btn) {
                 btn.disabled = true;
                 btn.style.opacity = '0.6';
-                btn.innerHTML = '<span class="codicon codicon-sync"></span> Refreshing\u2026';
+                btn.innerHTML = '<span class="codicon codicon-sync"></span> ${vscode.l10n.t('Refreshing\u2026')}';
             });
             // Replace section bodies with skeleton placeholders
             var skeletonMap = {

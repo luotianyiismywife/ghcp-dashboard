@@ -90,7 +90,7 @@ class DashboardPanel {
             case 'openMcpConfig':
                 if (message.path) { vscode.window.showTextDocument(vscode.Uri.file(message.path)); } break;
             case 'copyAccountInfo':
-                if (message.text) { vscode.env.clipboard.writeText(message.text); vscode.window.showInformationMessage('Copied to clipboard'); } break;
+                if (message.text) { vscode.env.clipboard.writeText(message.text); vscode.window.showInformationMessage(vscode.l10n.t('Copied to clipboard')); } break;
             case 'openSettings':
                 vscode.commands.executeCommand('workbench.action.openSettings', 'editor.aiStats.enabled'); break;
             case 'openChatSession':
@@ -125,10 +125,10 @@ class DashboardPanel {
                             await vscode.commands.executeCommand('workbench.action.chat.open');
                         } catch (e) { /* continue */ }
                         vscode.window.showInformationMessage(
-                            'Session: ' + title + ' — Look for this session in the Chat sidebar.',
-                            'Copy Session ID'
+                            vscode.l10n.t('Session: ') + title + vscode.l10n.t(' \u2014 Look for this session in the Chat sidebar.'),
+                            vscode.l10n.t('Copy Session ID')
                         ).then(choice => {
-                            if (choice === 'Copy Session ID') vscode.env.clipboard.writeText(sid);
+                            if (choice === vscode.l10n.t('Copy Session ID')) vscode.env.clipboard.writeText(sid);
                         });
                     }
                 } break;
@@ -334,18 +334,18 @@ class DashboardPanel {
                 <div class="card"><div class="card-body">
                     <div class="full-empty-state small">
                         <span class="codicon codicon-person" style="font-size:24px"></span>
-                        <h3>No Accounts Linked</h3>
-                        <p>No GitHub or Microsoft accounts are signed in to VS Code.</p>
+                        <h3>${vscode.l10n.t('No Accounts Linked')}</h3>
+                        <p>${vscode.l10n.t('No GitHub or Microsoft accounts are signed in to VS Code.')}</p>
                         <div class="empty-actions">
-                            <button class="btn btn-primary" data-command="signInGithub"><span class="codicon codicon-github"></span> Sign in to GitHub</button>
-                            <button class="btn btn-secondary" data-command="signInMicrosoft"><span class="codicon codicon-azure"></span> Sign in to Microsoft</button>
+                            <button class="btn btn-primary" data-command="signInGithub"><span class="codicon codicon-github"></span> ${vscode.l10n.t('Sign in to GitHub')}</button>
+                            <button class="btn btn-secondary" data-command="signInMicrosoft"><span class="codicon codicon-azure"></span> ${vscode.l10n.t('Sign in to Microsoft')}</button>
                         </div>
                     </div>
                 </div></div>
             ` : `<div class="acct-layout">
                 <div class="acct-list-col">
                     <div class="card" style="height:100%;">
-                        <div class="card-header"><div class="card-title"><span class="codicon codicon-account"></span> All Accounts</div><span class="badge">${totalAccounts}</span></div>
+                        <div class="card-header"><div class="card-title"><span class="codicon codicon-account"></span> ${vscode.l10n.t('All Accounts')}</div><span class="badge">${totalAccounts}</span></div>
                         <div class="card-body" style="padding:8px;" id="acctListBody">
                             ${data.github.map((acc, i) => `<div class="acct-list-item${i === 0 ? ' selected' : ''}" data-acct-idx="${i}" data-acct-provider="github"><div class="avatar gh" style="width:24px;height:24px;font-size:14px;"><span>🐙</span></div><div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(acc.label)}</div><div style="font-size:9px;color:var(--vscode-descriptionForeground);display:flex;align-items:center;gap:4px;"><span class="status-dot ${acc.hasSession ? 'active' : 'inactive'}"></span> GitHub${data.activeCopilotAccount && data.activeCopilotAccount.provider === 'github' && data.activeCopilotAccount.label === acc.label ? ' \u00b7 <span style="color:#a78bfa;">Copilot</span>' : ''}</div></div></div>`).join('')}
                             ${data.microsoft.map((acc, i) => `<div class="acct-list-item" data-acct-idx="${i}" data-acct-provider="microsoft"><div class="avatar ms" style="width:24px;height:24px;font-size:14px;"><span>🌐</span></div><div style="flex:1;min-width:0;"><div style="font-size:12px;font-weight:600;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;">${esc(acc.label)}</div><div style="font-size:9px;color:var(--vscode-descriptionForeground);display:flex;align-items:center;gap:4px;"><span class="status-dot ${acc.hasSession ? 'active' : 'inactive'}"></span> Microsoft${data.activeCopilotAccount && data.activeCopilotAccount.provider === 'microsoft' && data.activeCopilotAccount.label === acc.label ? ' \u00b7 <span style="color:#a78bfa;">Copilot</span>' : ''}</div></div></div>`).join('')}
@@ -353,7 +353,7 @@ class DashboardPanel {
                     </div>
                 </div>
                 <div class="acct-detail-col" id="acctDetailCol">
-                    <div class="card" style="height:100%;"><div class="card-body" style="display:flex;align-items:center;justify-content:center;color:var(--vscode-descriptionForeground);font-size:12px;"><span class="codicon codicon-arrow-left" style="margin-right:6px;"></span> Select an account</div></div>
+                    <div class="card" style="height:100%;"><div class="card-body" style="display:flex;align-items:center;justify-content:center;color:var(--vscode-descriptionForeground);font-size:12px;"><span class="codicon codicon-arrow-left" style="margin-right:6px;"></span> ${vscode.l10n.t('Select an account')}</div></div>
                 </div>
             </div>
             <div id="acctDataStore" style="display:none;">${esc(JSON.stringify({
@@ -372,31 +372,31 @@ class DashboardPanel {
         <!-- COPILOT & CHAT -->
         <div class="tab-panel active" id="panel-copilot">
             <div class="card">
-                <div class="card-header"><div class="card-title"><span class="codicon codicon-comment-discussion"></span> Copilot Chat</div><span class="badge ${chatInstalled ? 'green' : 'red'}">${chatInstalled ? 'Installed' : 'Not Installed'}</span></div>
+                <div class="card-header"><div class="card-title"><span class="codicon codicon-comment-discussion"></span> ${vscode.l10n.t('Copilot Chat')}</div><span class="badge ${chatInstalled ? 'green' : 'red'}">${chatInstalled ? vscode.l10n.t('Installed') : vscode.l10n.t('Not Installed')}</span></div>
                 <div class="card-body">
                     ${chatInstalled ? `<div class="info-grid">
-                        <div class="info-row"><span class="info-label">Version</span><span class="info-value">${data.copilot.copilotChat.version}</span></div>
-                        <div class="info-row"><span class="info-label">Status</span><span class="info-value">${data.copilot.copilotChat.active ? '<span class="status-ind active">Active</span>' : '<span class="status-ind inactive">Inactive</span>'}</span></div>
-                        <div class="info-row"><span class="info-label">Extension ID</span><span class="info-value">GitHub.copilot-chat</span></div>
-                        <div class="info-row"><span class="info-label">Last Used Account</span><span class="info-value">${data.activeCopilotAccount ? esc(data.activeCopilotAccount.label) + ' <span class="tag ' + (data.activeCopilotAccount.provider === 'github' ? 'tag-purple' : 'tag-orange') + '" style="margin-left:6px;font-size:0.72em;">' + esc(data.activeCopilotAccount.provider) + '</span> <span style="font-size:10px;color:var(--vscode-descriptionForeground);margin-left:4px;">' + new Date(data.activeCopilotAccount.lastUsed).toLocaleString() + '</span>' : '<em>Not signed in</em>'}</span></div>
-                    </div>` : `<div class="empty-state"><div class="empty-icon"><span class="codicon codicon-comment-discussion"></span></div><p>GitHub Copilot Chat is <strong>not installed</strong></p><p class="hint">Without Copilot Chat, you cannot use the AI chat panel, inline chat, or voice features.</p><p class="hint">No usage data or reports are available.</p></div>`}
+                        <div class="info-row"><span class="info-label">${vscode.l10n.t('Version')}</span><span class="info-value">${data.copilot.copilotChat.version}</span></div>
+                        <div class="info-row"><span class="info-label">${vscode.l10n.t('Status')}</span><span class="info-value">${data.copilot.copilotChat.active ? '<span class="status-ind active">' + vscode.l10n.t('Active') + '</span>' : '<span class="status-ind inactive">' + vscode.l10n.t('Inactive') + '</span>'}</span></div>
+                        <div class="info-row"><span class="info-label">${vscode.l10n.t('Extension ID')}</span><span class="info-value">GitHub.copilot-chat</span></div>
+                        <div class="info-row"><span class="info-label">${vscode.l10n.t('Last Used Account')}</span><span class="info-value">${data.activeCopilotAccount ? esc(data.activeCopilotAccount.label) + ' <span class="tag ' + (data.activeCopilotAccount.provider === 'github' ? 'tag-purple' : 'tag-orange') + '" style="margin-left:6px;font-size:0.72em;">' + esc(data.activeCopilotAccount.provider) + '</span> <span style="font-size:10px;color:var(--vscode-descriptionForeground);margin-left:4px;">' + new Date(data.activeCopilotAccount.lastUsed).toLocaleString() + '</span>' : '<em>' + vscode.l10n.t('Not signed in') + '</em>'}</span></div>
+                    </div>` : `<div class="empty-state"><div class="empty-icon"><span class="codicon codicon-comment-discussion"></span></div><p>${vscode.l10n.t('GitHub Copilot Chat is not installed')}</p><p class="hint">${vscode.l10n.t('Without Copilot Chat, you cannot use the AI chat panel, inline chat, or voice features.')}</p><p class="hint">${vscode.l10n.t('No usage data or reports are available.')}</p></div>`}
                 </div>
             </div>
             ${(!chatInstalled && !copilotInstalled) ? `
-                <div class="card mt"><div class="card-body"><div class="info-banner warning"><span class="codicon codicon-warning"></span> <strong>No Copilot extensions found.</strong> Without GitHub Copilot and Copilot Chat, no AI-powered features, usage reports, or suggestion data are available. Install them from the Extensions marketplace.</div></div></div>
+                <div class="card mt"><div class="card-body"><div class="info-banner warning"><span class="codicon codicon-warning"></span> <strong>${vscode.l10n.t('No Copilot extensions found.')}</strong> ${vscode.l10n.t('Without GitHub Copilot and Copilot Chat, no AI-powered features, usage reports, or suggestion data are available. Install them from the Extensions marketplace.')}</div></div></div>
             ` : ''}
             ${(chatInstalled || copilotInstalled) ? (() => {
                 const currentWsSessions = data.chatSessions.filter(s => s.isCurrentWorkspace || (data.workspace.name && s.workspace === data.workspace.name));
                 const recentWsSessions = currentWsSessions.slice(0, 5);
                 return `
                 <div class="card mt">
-                    <div class="card-header"><div class="card-title"><span class="codicon codicon-comment-discussion"></span> Recent Chat Sessions <span class="recent-sessions-info-icon"><span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(88,166,255,0.15);color:#58a6ff;font-size:11px;font-weight:700;cursor:help;">?</span><div class="recent-sessions-info-tooltip">Shows recent Copilot Chat sessions from the <strong>current workspace</strong>.<br><br>\u2022 Only sessions belonging to this workspace are displayed.<br>\u2022 Click <strong>Open</strong> to resume a session in the Chat panel.<br>\u2022 For all sessions across workspaces, see the <strong>Chat Sessions</strong> tab.<br><br>Session types: <strong>Agent</strong> (Copilot agent mode), <strong>Ask</strong> (question mode), <strong>Chat</strong> (standard chat).</div></span></div><span class="badge">${recentWsSessions.length > 0 ? 'Latest ' + recentWsSessions.length : '0 sessions'}</span></div>
+                    <div class="card-header"><div class="card-title"><span class="codicon codicon-comment-discussion"></span> ${vscode.l10n.t('Recent Chat Sessions')} <span class="recent-sessions-info-icon"><span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:rgba(88,166,255,0.15);color:#58a6ff;font-size:11px;font-weight:700;cursor:help;">?</span><div class="recent-sessions-info-tooltip">${vscode.l10n.t('Shows recent Copilot Chat sessions from the current workspace.')}<br><br>\u2022 ${vscode.l10n.t('Only sessions belonging to this workspace are displayed.')}<br>\u2022 ${vscode.l10n.t('Click Open to resume a session in the Chat panel.')}<br>\u2022 ${vscode.l10n.t('For all sessions across workspaces, see the Chat Sessions tab.')}<br><br>${vscode.l10n.t('Session types: Agent (Copilot agent mode), Ask (question mode), Chat (standard chat).')}</div></span></div><span class="badge">${recentWsSessions.length > 0 ? vscode.l10n.t('Latest ') + recentWsSessions.length : vscode.l10n.t('0 sessions')}</span></div>
                     <div class="card-body" style="padding:12px 16px;">
-                        ${recentWsSessions.length === 0 ? '<div class="empty-state" style="padding:16px;"><div class="empty-icon"><span class="codicon codicon-comment-discussion"></span></div><p>No chat sessions found for this workspace</p><p class="hint">Start a Copilot Chat conversation in this workspace to see your recent sessions here.</p></div>' : `
+                        ${recentWsSessions.length === 0 ? '<div class="empty-state" style="padding:16px;"><div class="empty-icon"><span class="codicon codicon-comment-discussion"></span></div><p>' + vscode.l10n.t('No chat sessions found for this workspace') + '</p><p class="hint">' + vscode.l10n.t('Start a Copilot Chat conversation in this workspace to see your recent sessions here.') + '</p></div>' : `
                         <div class="recent-sessions-list">
                             ${recentWsSessions.map(s => {
-                                const title = esc(s.title || 'Untitled Session');
-                                const typeLabel = (s.chatType === 'agent' || s.source === 'agentSession') ? 'Agent' : s.chatType === 'ask' ? 'Ask' : s.chatType === 'custom-agent' ? '@' + esc(s.agentName || 'custom') : 'Chat';
+                                const title = esc(s.title || vscode.l10n.t('Untitled Session'));
+                                const typeLabel = (s.chatType === 'agent' || s.source === 'agentSession') ? vscode.l10n.t('Agent') : s.chatType === 'ask' ? vscode.l10n.t('Ask') : s.chatType === 'custom-agent' ? '@' + esc(s.agentName || 'custom') : vscode.l10n.t('Chat');
                                 const typeClass = (s.chatType === 'agent' || s.source === 'agentSession') ? 'agent' : s.chatType === 'ask' ? 'ask' : s.chatType === 'custom-agent' ? 'custom' : 'chat';
                                 const dateObj = new Date(s.lastMessageDate || s.creationDate);
                                 const dateStr = dateObj.toLocaleDateString('en-GB', {day:'2-digit', month:'short', year:'numeric'});
@@ -410,10 +410,10 @@ class DashboardPanel {
                                             <span class="chat-source-badge ${typeClass}" style="font-size:8px;padding:1px 5px;">${typeLabel}</span>
                                             <span class="chat-status-badge ${statusClass}" style="font-size:8px;padding:1px 5px;">${statusLabel}</span>
                                             <span style="font-size:10px;color:var(--vscode-descriptionForeground);">${dateStr}, ${timeStr}</span>
-                                            <span style="font-size:10px;color:var(--vscode-descriptionForeground);">${s.messageCount || 0} prompts</span>
+                                            <span style="font-size:10px;color:var(--vscode-descriptionForeground);">${s.messageCount || 0} ${vscode.l10n.t('prompts')}</span>
                                         </div>
                                     </div>
-                                    <button class="chat-open-btn" data-command="openChatSession" data-session-id="${esc(s.sessionId)}" data-session-title="${title}" title="Open this session in VS Code Chat"><span class="codicon codicon-link-external"></span> Open</button>
+                                    <button class="chat-open-btn" data-command="openChatSession" data-session-id="${esc(s.sessionId)}" data-session-title="${title}" title="${vscode.l10n.t('Open this session in VS Code Chat')}"><span class="codicon codicon-link-external"></span> ${vscode.l10n.t('Open')}</button>
                                 </div>`;
                             }).join('')}
                         </div>
@@ -423,7 +423,7 @@ class DashboardPanel {
             `;})() : ''}
             ${(chatInstalled || copilotInstalled) ? `
                 <div class="card mt">
-                    <div class="card-header"><div class="card-title"><span class="codicon codicon-graph"></span> AI Usage Metrics</div><div class="card-header-actions"><span class="period-label" id="usagePeriodLabel"></span><button class="btn btn-sm btn-secondary btn-refresh-chart" id="refreshUsageBtn" title="Refresh charts"><span class="codicon codicon-refresh"></span> Refresh</button></div></div>
+                    <div class="card-header"><div class="card-title"><span class="codicon codicon-graph"></span> ${vscode.l10n.t('AI Usage Metrics')}</div><div class="card-header-actions"><span class="period-label" id="usagePeriodLabel"></span><button class="btn btn-sm btn-secondary btn-refresh-chart" id="refreshUsageBtn" title="${vscode.l10n.t('Refresh charts')}"><span class="codicon codicon-refresh"></span> ${vscode.l10n.t('Refresh')}</button></div></div>
                     <div class="card-body">
                         ${!aiStatsEnabled ? `<div class="info-banner warning" style="margin-bottom:12px;display:flex;align-items:flex-start;gap:8px;padding:10px 14px;border-radius:6px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25)"><span class="codicon codicon-warning" style="color:#f59e0b;flex-shrink:0;margin-top:2px"></span><div><strong style="color:#f59e0b">AI Stats collection is disabled</strong><br><span style="font-size:12px">The setting <code>editor.aiStats.enabled</code> is currently <strong>false</strong>. No new AI usage data is being recorded. <a href="#" data-command="openSettings" style="color:#f59e0b;text-decoration:underline;cursor:pointer">Open Settings</a> to enable it.${aiStatsStale ? '<br><br><span class="codicon codicon-info" style="margin-right:4px"></span>The data shown below is <strong>stale</strong> — last recorded on <strong>' + new Date(data.aiStats[data.aiStats.length - 1].startTime).toLocaleDateString() + '</strong>. Any coding activity since then has not been captured.' : ''}</span></div></div>` : ''}
                         ${data.aiStats.length === 0 && aiStatsEnabled ? '<div class="empty-state"><div class="empty-icon"><span class="codicon codicon-graph"></span></div><p>No AI usage data found yet</p><p class="hint">AI Stats collection is enabled. Data will appear after your first coding session.</p></div>' : data.aiStats.length === 0 ? '<div class="empty-state"><div class="empty-icon"><span class="codicon codicon-graph"></span></div><p>No AI usage data found</p><p class="hint"><a href="#" data-command="openSettings" style="text-decoration:underline;cursor:pointer">Open Settings</a> to enable <code>editor.aiStats.enabled</code> and start collecting real usage data.</p></div>' : '<div class="filter-bar"><div class="filter-group"><label class="filter-label"><span class="codicon codicon-calendar"></span> Period</label><div class="period-filters" id="usagePeriodFilters"><button class="period-btn" data-usage-period="today">Today</button><button class="period-btn active" data-usage-period="week">This Week</button><button class="period-btn" data-usage-period="last7">Last 7 Days</button><button class="period-btn" data-usage-period="last30">Last 30 Days</button><button class="period-btn" data-usage-period="month">This Month</button><button class="period-btn" data-usage-period="all">All</button></div></div></div><div class="usage-stats" id="usageStats"></div><div class="chart-section"><div class="chart-header"><h3 id="usageChartTitle">AI Acceptance Rate</h3><div class="chart-legend" id="usageChartLegend"></div></div><div class="chart-desc"><span class="info-icon">\u2139\ufe0f</span> Shows what percentage of your total code was generated by AI (Copilot) each day. Green bars = high AI usage (>70%), blue = moderate (40-70%), amber = low (<40%). Empty bars mean no coding activity on that day.</div><div class="bar-chart" id="usageBarChart"></div></div>'}

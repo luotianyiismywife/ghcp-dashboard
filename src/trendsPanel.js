@@ -1,3 +1,5 @@
+const vscode = require('vscode');
+
 /**
  * Trends & Reports panel for the GHCP Dashboard.
  * Provides weekly/monthly usage trend analysis with comparison periods and export (CSV/Markdown).
@@ -18,14 +20,14 @@ function getTrendsTabHTML(data, aiStatsEnabled) {
     return `
         <div class="card-body" id="panel-trends" style="font-size:11px;">
                 <div class="card-body" style="padding:0;">
-                    ${!aiStatsEnabled ? `<div class="info-banner warning" style="margin-bottom:8px;display:flex;align-items:flex-start;gap:6px;padding:8px 10px;border-radius:6px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);font-size:10px;"><span class="codicon codicon-warning" style="color:#f59e0b;flex-shrink:0;margin-top:1px"></span><div><strong style="color:#f59e0b">AI Stats disabled</strong> — <a href="#" data-command="openSettings" style="color:#f59e0b;text-decoration:underline;cursor:pointer">Enable</a></div></div>` : ''}
-                    ${!hasData ? `<div class="empty-state" style="padding:16px;"><div class="empty-icon"><span class="codicon codicon-graph-line"></span></div><p style="font-size:11px;">No trend data</p></div>` : `
+                    ${!aiStatsEnabled ? `<div class="info-banner warning" style="margin-bottom:8px;display:flex;align-items:flex-start;gap:6px;padding:8px 10px;border-radius:6px;background:rgba(245,158,11,0.08);border:1px solid rgba(245,158,11,0.25);font-size:10px;"><span class="codicon codicon-warning" style="color:#f59e0b;flex-shrink:0;margin-top:1px"></span><div><strong style="color:#f59e0b">${vscode.l10n.t('AI Stats disabled')}</strong> — <a href="#" data-command="openSettings" style="color:#f59e0b;text-decoration:underline;cursor:pointer">${vscode.l10n.t('Enable')}</a></div></div>` : ''}
+                    ${!hasData ? `<div class="empty-state" style="padding:16px;"><div class="empty-icon"><span class="codicon codicon-graph-line"></span></div><p style="font-size:11px;">${vscode.l10n.t('No trend data')}</p></div>` : `
                     <div style="margin-bottom:10px;">
-                        <div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--vscode-descriptionForeground);margin-bottom:4px;">Compare</div>
+                        <div style="font-size:9px;font-weight:600;text-transform:uppercase;letter-spacing:0.5px;color:var(--vscode-descriptionForeground);margin-bottom:4px;">${vscode.l10n.t('Compare')}</div>
                         <div class="period-filters" id="trendsPeriodFilters" style="flex-wrap:wrap;">
-                            <button class="period-btn active" data-trends-period="week" style="font-size:10px;padding:3px 8px;">Week</button>
-                            <button class="period-btn" data-trends-period="month" style="font-size:10px;padding:3px 8px;">Month</button>
-                            <button class="period-btn" data-trends-period="last30" style="font-size:10px;padding:3px 8px;">30 Days</button>
+                            <button class="period-btn active" data-trends-period="week" style="font-size:10px;padding:3px 8px;">${vscode.l10n.t('Week')}</button>
+                            <button class="period-btn" data-trends-period="month" style="font-size:10px;padding:3px 8px;">${vscode.l10n.t('Month')}</button>
+                            <button class="period-btn" data-trends-period="last30" style="font-size:10px;padding:3px 8px;">${vscode.l10n.t('30 Days')}</button>
                         </div>
                         <span class="period-label" id="trendsPeriodLabel" style="font-size:9px;display:block;margin-top:4px;"></span>
                     </div>
@@ -36,7 +38,7 @@ function getTrendsTabHTML(data, aiStatsEnabled) {
                     <!-- Charts (compact) -->
                     <div class="card" style="margin-bottom:10px;">
                         <div class="card-header collapsible-header" data-collapse="trends-activeDays" style="cursor:pointer;padding:6px 10px;">
-                            <div class="card-title" style="font-size:11px;"><span class="codicon codicon-calendar"></span> Active Days</div>
+                            <div class="card-title" style="font-size:11px;"><span class="codicon codicon-calendar"></span> ${vscode.l10n.t('Active Days')}</div>
                             <div class="card-header-actions"><span class="collapse-chevron" data-collapse-icon="trends-activeDays" style="display:inline-block;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--vscode-descriptionForeground);transition:transform 0.15s;margin-left:6px;"></span></div>
                         </div>
                         <div data-collapse-body="trends-activeDays">
@@ -47,7 +49,7 @@ function getTrendsTabHTML(data, aiStatsEnabled) {
 
                     <div class="card" style="margin-bottom:10px;">
                         <div class="card-header collapsible-header" data-collapse="trends-chars" style="cursor:pointer;padding:6px 10px;">
-                            <div class="card-title" style="font-size:11px;"><span class="codicon codicon-code"></span> Characters</div>
+                            <div class="card-title" style="font-size:11px;"><span class="codicon codicon-code"></span> ${vscode.l10n.t('Characters')}</div>
                             <div class="card-header-actions"><span class="collapse-chevron" data-collapse-icon="trends-chars" style="display:inline-block;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--vscode-descriptionForeground);transition:transform 0.15s;transform:rotate(-90deg);margin-left:6px;"></span></div>
                         </div>
                         <div data-collapse-body="trends-chars" style="display:none;">
@@ -58,7 +60,7 @@ function getTrendsTabHTML(data, aiStatsEnabled) {
 
                     <div class="card" style="margin-bottom:10px;">
                         <div class="card-header collapsible-header" data-collapse="trends-rate" style="cursor:pointer;padding:6px 10px;">
-                            <div class="card-title" style="font-size:11px;"><span class="codicon codicon-pulse"></span> <span id="trendsChartTitle">AI Rate</span></div>
+                            <div class="card-title" style="font-size:11px;"><span class="codicon codicon-pulse"></span> <span id="trendsChartTitle">${vscode.l10n.t('AI Rate')}</span></div>
                             <div class="card-header-actions"><span class="collapse-chevron" data-collapse-icon="trends-rate" style="display:inline-block;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--vscode-descriptionForeground);transition:transform 0.15s;transform:rotate(-90deg);margin-left:6px;"></span></div>
                         </div>
                         <div data-collapse-body="trends-rate" style="display:none;">
@@ -69,7 +71,7 @@ function getTrendsTabHTML(data, aiStatsEnabled) {
 
                     <div class="card" style="margin-bottom:10px;">
                         <div class="card-header collapsible-header" data-collapse="trends-activity" style="cursor:pointer;padding:6px 10px;">
-                            <div class="card-title" style="font-size:11px;"><span class="codicon codicon-lightbulb"></span> Suggestions & Edits</div>
+                            <div class="card-title" style="font-size:11px;"><span class="codicon codicon-lightbulb"></span> ${vscode.l10n.t('Suggestions & Edits')}</div>
                             <div class="card-header-actions"><span class="collapse-chevron" data-collapse-icon="trends-activity" style="display:inline-block;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--vscode-descriptionForeground);transition:transform 0.15s;transform:rotate(-90deg);margin-left:6px;"></span></div>
                         </div>
                         <div data-collapse-body="trends-activity" style="display:none;">
@@ -81,16 +83,16 @@ function getTrendsTabHTML(data, aiStatsEnabled) {
                     <!-- Comparison Table -->
                     <div class="card" style="margin-bottom:10px;">
                         <div class="card-header collapsible-header" data-collapse="trends-table" style="cursor:pointer;padding:6px 10px;">
-                            <div class="card-title" style="font-size:11px;"><span class="codicon codicon-table"></span> Comparison</div>
+                            <div class="card-title" style="font-size:11px;"><span class="codicon codicon-table"></span> ${vscode.l10n.t('Comparison')}</div>
                             <div class="card-header-actions"><span class="collapse-chevron" data-collapse-icon="trends-table" style="display:inline-block;width:0;height:0;border-left:4px solid transparent;border-right:4px solid transparent;border-top:5px solid var(--vscode-descriptionForeground);transition:transform 0.15s;transform:rotate(-90deg);margin-left:6px;"></span></div>
                         </div>
                         <div data-collapse-body="trends-table" style="display:none;padding:0;">
                             <table class="data-table" id="trendsTable">
                                 <thead><tr>
-                                    <th>Metric</th>
-                                    <th id="trendsColCurrent">Current</th>
-                                    <th id="trendsColPrevious">Previous</th>
-                                    <th>Change</th>
+                                    <th>${vscode.l10n.t('Metric')}</th>
+                                    <th id="trendsColCurrent">${vscode.l10n.t('Current')}</th>
+                                    <th id="trendsColPrevious">${vscode.l10n.t('Previous')}</th>
+                                    <th>${vscode.l10n.t('Change')}</th>
                                 </tr></thead>
                                 <tbody id="trendsTableBody"></tbody>
                             </table>

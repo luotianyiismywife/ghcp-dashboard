@@ -1,0 +1,9 @@
+{
+	"extension.displayName": "GitHub Copilot Insights Dashboard",
+	"extension.description": "在 VS Code 中查看 GitHub Copilot 账户、聊天会话与历史记录、AI 用量统计、MCP 服务器连接和语言模型。浏览并重新打开 Agent、Ask、Chat 及自定义 Agent 会话。",
+	"cmd.open.title": "GHCP: 打开 Copilot 洞察仪表板",
+	"cmd.refresh.title": "GHCP: 刷新账户数据",
+	"cmd.switchAccount.title": "GHCP: 切换 GitHub 账户",
+	"viewContainer.title": "GitHub Copilot Insights Dashboard",
+	"view.name": "账户概览"
+}
