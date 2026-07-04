@@ -33,32 +33,7 @@
 
 ## 项目结构
 
-```
-ghcp-dashboard/
-├── .vscode/                  # VS Code 工作区设置
-├── media/                    # 图标资源
-│   ├── GHCP_dash_icon_circle.png
-│   ├── GHCP_dash_icon_sjtc.png
-│   └── GHCP_dash_icon_sjtc_1.png
-├── src/                      # 源码
-│   ├── extension.js          # 扩展入口，注册命令、侧边栏、认证监听
-│   ├── accountDataFetcher.js # 核心数据获取模块（账户、MCP、AI Stats、模型等）
-│   ├── dashboardPanel.js     # 完整仪表板 WebView 面板
-│   ├── sidebarProvider.js    # 侧边栏 WebView 提供程序
-│   └── trendsPanel.js        # 趋势与报表标签页
-├── test_ai_stats.js          # AI Stats 数据验证测试
-├── test_aistats_diagnostics.js
-├── test_fetcher_parity.js    # 数据获取器一致性测试
-├── test_heatmap.js           # 热力图数据测试
-├── test_late_may_probe.js
-├── test_may_28_31_raw_scan.js
-├── test_may_workspace_inspect.js
-├── test_verify.js            # 语法/结构/功能的综合验证测试
-├── package.json
-├── ghcp-dashboard.code-workspace
-├── LICENSE.txt
-└── README.md
-```
+> 项目结构图已移至 `dev` 分支的 [`结构表/总览.md`](https://github.com/luotianyiismywife/ghcp-dashboard/blob/dev/%E7%BB%93%E6%9E%84%E8%A1%A8/%E6%80%BB%E8%A7%88.md)，包含完整的文件清单、各文件职责、函数说明和设计决策，比此处的静态列表更详尽且持续更新。
 
 ---
 
