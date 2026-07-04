@@ -1,0 +1,96 @@
+{
+	"name": "ghcp-dashboard",
+	"displayName": "GitHub Copilot Insights Dashboard",
+	"description": "View GitHub Copilot accounts, chat sessions & history, AI usage statistics, MCP server connections, and language models — all inside VS Code. Browse and reopen Agent, Ask, Chat & Custom Agent sessions across workspaces.",
+	"version": "2.0.4",
+	"publisher": "luotianyiismywife",
+	"license": "MIT",
+	"icon": "media/GHCP_dash_icon_circle.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/luotianyiismywife/ghcp-dashboard"
+	},
+	"homepage": "https://github.com/luotianyiismywife/ghcp-dashboard#readme",
+	"keywords": [
+		"github",
+		"copilot",
+		"dashboard",
+		"ai",
+		"mcp",
+		"usage",
+		"statistics",
+		"accounts",
+		"sessions",
+		"chat-history",
+		"agent"
+	],
+	"engines": {
+		"vscode": "^1.95.0"
+	},
+	"categories": [
+		"Programming Languages",
+		"Machine Learning",
+		"AI",
+		"Chat"
+	],
+	"activationEvents": [],
+	"main": "./src/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "ghcpDashboard.open",
+				"title": "GHCP: Open Copilot Insights Dashboard",
+				"icon": "$(github)"
+			},
+			{
+				"command": "ghcpDashboard.refresh",
+				"title": "GHCP: Refresh Account Data",
+				"icon": "$(refresh)"
+			},
+			{
+				"command": "ghcpDashboard.switchAccount",
+				"title": "GHCP: Switch GitHub Account"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "ghcp-dashboard",
+					"title": "GitHub Copilot Insights Dashboard",
+					"icon": "$(github)"
+				}
+			]
+		},
+		"views": {
+			"ghcp-dashboard": [
+				{
+					"type": "webview",
+					"id": "ghcpDashboard.sidebarView",
+					"name": "Account Overview"
+				}
+			]
+		},
+		"menus": {
+			"view/title": [
+				{
+					"command": "ghcpDashboard.refresh",
+					"when": "view == ghcpDashboard.sidebarView",
+					"group": "navigation"
+				}
+			]
+		}
+	},
+	"scripts": {
+		"package": "npx @vscode/vsce package --allow-missing-repository",
+		"package:dev": "node scripts/build-dev.js"
+	},
+	"devDependencies": {
+		"@types/vscode": "^1.95.0",
+		"@vscode/vsce": "^2.22.0"
+	},
+	"__metadata": {
+		"installedTimestamp": 1783168243382,
+		"targetPlatform": "undefined",
+		"size": 1433651
+	}
+}
