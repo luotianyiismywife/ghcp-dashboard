@@ -1,0 +1,9 @@
+{
+	"extension.displayName": "GitHub Copilot Insights Dashboard",
+	"extension.description": "View GitHub Copilot accounts, chat sessions & history, AI usage statistics, MCP server connections, and language models — all inside VS Code. Browse and reopen Agent, Ask, Chat & Custom Agent sessions across workspaces.",
+	"cmd.open.title": "GHCP: Open Copilot Insights Dashboard",
+	"cmd.refresh.title": "GHCP: Refresh Account Data",
+	"cmd.switchAccount.title": "GHCP: Switch GitHub Account",
+	"viewContainer.title": "GitHub Copilot Insights Dashboard",
+	"view.name": "Account Overview"
+}

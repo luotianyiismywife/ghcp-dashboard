@@ -50,7 +50,7 @@ function activate(context) {
     // Command: Open full dashboard panel
     context.subscriptions.push(
         vscode.commands.registerCommand('ghcpDashboard.open', () => {
-            try { DashboardPanel.createOrShow(context.extensionUri, context); } catch (e) { console.error('GHCP: Failed to open dashboard', e); vscode.window.showErrorMessage('GHCP Dashboard: Failed to open. ' + e.message); }
+            try { DashboardPanel.createOrShow(context.extensionUri, context); } catch (e) { console.error('GHCP: Failed to open dashboard', e); vscode.window.showErrorMessage(vscode.l10n.t('GHCP Dashboard: Failed to open. ') + e.message); }
         })
     );
 
@@ -62,7 +62,7 @@ function activate(context) {
                 if (DashboardPanel.currentPanel) {
                     DashboardPanel.currentPanel.refresh();
                 }
-                vscode.window.showInformationMessage('GHCP Dashboard: Account data refreshed');
+                vscode.window.showInformationMessage(vscode.l10n.t('GHCP Dashboard: Account data refreshed'));
             } catch (e) { console.error('GHCP: Refresh failed', e); }
         })
     );
@@ -71,14 +71,14 @@ function activate(context) {
     context.subscriptions.push(
         vscode.commands.registerCommand('ghcpDashboard.switchAccount', async () => {
             const items = [
-                { label: '$(github) Sign out of GitHub', description: 'Sign out and re-authenticate with a different GitHub account', action: 'github-signout' },
-                { label: '$(account) Sign out of Microsoft', description: 'Sign out of Microsoft account used for MCP servers', action: 'ms-signout' },
-                { label: '$(sign-in) Sign in to GitHub', description: 'Sign in with a GitHub account', action: 'github-signin' },
-                { label: '$(key) Manage Accounts...', description: 'Open VS Code account management', action: 'manage' }
+                { label: vscode.l10n.t('$(github) Sign out of GitHub'), description: vscode.l10n.t('Sign out and re-authenticate with a different GitHub account'), action: 'github-signout' },
+                { label: vscode.l10n.t('$(account) Sign out of Microsoft'), description: vscode.l10n.t('Sign out of Microsoft account used for MCP servers'), action: 'ms-signout' },
+                { label: vscode.l10n.t('$(sign-in) Sign in to GitHub'), description: vscode.l10n.t('Sign in with a GitHub account'), action: 'github-signin' },
+                { label: vscode.l10n.t('$(key) Manage Accounts...'), description: vscode.l10n.t('Open VS Code account management'), action: 'manage' }
             ];
 
             const selection = await vscode.window.showQuickPick(items, {
-                placeHolder: 'Switch or manage accounts for GitHub Copilot and MCP servers'
+                placeHolder: vscode.l10n.t('Switch or manage accounts for GitHub Copilot and MCP servers')
             });
 
             if (!selection) return;
@@ -94,7 +94,7 @@ function activate(context) {
                     // Trigger a session request which will prompt sign-in
                     try {
                         await vscode.authentication.getSession('github', ['user:email'], { createIfNone: true });
-                        vscode.window.showInformationMessage('GitHub account connected!');
+                        vscode.window.showInformationMessage(vscode.l10n.t('GitHub account connected!'));
                     } catch (e) {
                         // User cancelled
                     }
@@ -108,8 +108,8 @@ function activate(context) {
 
     // Status bar item
     const statusBarItem = vscode.window.createStatusBarItem(vscode.StatusBarAlignment.Right, 100);
-    statusBarItem.text = '$(github) GHCP';
-    statusBarItem.tooltip = 'Open GitHub Copilot Insights Dashboard';
+    statusBarItem.text = vscode.l10n.t('$(github) GHCP');
+    statusBarItem.tooltip = vscode.l10n.t('Open GitHub Copilot Insights Dashboard');
     statusBarItem.command = 'ghcpDashboard.open';
     statusBarItem.show();
     context.subscriptions.push(statusBarItem);
@@ -129,7 +129,7 @@ function activate(context) {
 
     } catch (e) {
         console.error('GHCP Dashboard: Failed to activate extension', e);
-        vscode.window.showErrorMessage('GHCP Dashboard failed to activate: ' + e.message);
+        vscode.window.showErrorMessage(vscode.l10n.t('GHCP Dashboard failed to activate: ') + e.message);
     }
 }
 

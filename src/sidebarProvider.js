@@ -72,7 +72,7 @@ class SidebarProvider {
                         try { const b64 = Buffer.from(sid).toString('base64'); const uri = vscode.Uri.parse('vscode-chat-session://local/' + b64); await vscode.commands.executeCommand('vscode.open', uri); opened = true; } catch (e) { /* continue */ }
                         if (!opened) { try { await vscode.commands.executeCommand('workbench.action.chat.openSession', sid); opened = true; } catch (e) { /* continue */ } }
                         if (!opened) { try { await vscode.commands.executeCommand('workbench.action.chat.open', { query: '', sessionId: sid }); opened = true; } catch (e) { /* continue */ } }
-                        if (!opened) { try { await vscode.commands.executeCommand('workbench.action.chat.open'); } catch (e) { /* continue */ } vscode.window.showInformationMessage('Session: ' + title + ' — Look for this session in the Chat sidebar.', 'Copy Session ID').then(choice => { if (choice === 'Copy Session ID') vscode.env.clipboard.writeText(sid); }); }
+                        if (!opened) { try { await vscode.commands.executeCommand('workbench.action.chat.open'); } catch (e) { /* continue */ } vscode.window.showInformationMessage(vscode.l10n.t('Session: ') + title + vscode.l10n.t(' \u2014 Look for this session in the Chat sidebar.'), vscode.l10n.t('Copy Session ID')).then(choice => { if (choice === vscode.l10n.t('Copy Session ID')) vscode.env.clipboard.writeText(sid); }); }
                     } break;
 
             }
@@ -129,60 +129,60 @@ class SidebarProvider {
 </style></head><body>
 <div class="scroll-body">
     <div class="section">
-        <div class="section-header"><span class="codicon codicon-graph"></span> AI Metrics</div>
+        <div class="section-header"><span class="codicon codicon-graph"></span> ${vscode.l10n.t('AI Metrics')}</div>
         <div class="skeleton-row"><div class="skeleton-card"></div><div class="skeleton-card"></div></div>
         <div class="skeleton-row"><div class="skeleton-card"></div><div class="skeleton-card"></div></div>
         <div class="skeleton" style="width:80%;margin-bottom:4px;"></div>
         <div class="skeleton" style="width:60%;"></div>
     </div>
     <div class="section">
-        <div class="section-header"><span class="codicon codicon-comment-discussion"></span> Copilot Chat</div>
+        <div class="section-header"><span class="codicon codicon-comment-discussion"></span> ${vscode.l10n.t('Copilot Chat')}</div>
         <div class="skeleton" style="width:70%;margin-bottom:6px;"></div>
         <div class="skeleton" style="width:50%;margin-bottom:6px;"></div>
         <div class="skeleton" style="width:60%;"></div>
     </div>
     <div class="section">
-        <div class="section-header"><span class="codicon codicon-history"></span> Recent Chat Sessions</div>
+        <div class="section-header"><span class="codicon codicon-history"></span> ${vscode.l10n.t('Recent Chat Sessions')}</div>
         <div class="skeleton" style="width:90%;margin-bottom:6px;"></div>
         <div class="skeleton" style="width:75%;margin-bottom:6px;"></div>
         <div class="skeleton" style="width:85%;"></div>
     </div>
     <div class="section">
-        <div class="section-header"><span class="codicon codicon-hubot"></span> Models</div>
+        <div class="section-header"><span class="codicon codicon-hubot"></span> ${vscode.l10n.t('Models')}</div>
         <div class="skeleton" style="width:65%;margin-bottom:6px;"></div>
         <div class="skeleton" style="width:50%;"></div>
     </div>
     <div class="section">
-        <div class="section-header"><span class="codicon codicon-plug"></span> MCP Servers</div>
+        <div class="section-header"><span class="codicon codicon-plug"></span> ${vscode.l10n.t('MCP Servers')}</div>
         <div class="skeleton" style="width:80%;margin-bottom:6px;"></div>
         <div class="skeleton" style="width:60%;"></div>
     </div>
 </div>
 <div class="loading-toast">
-    <span class="toast-fox">\ud83e\udd8a</span>Loading data\u2026
+    <span class="toast-fox">\ud83e\udd8a</span>${vscode.l10n.t('Loading data\u2026')}
     <div class="toast-msg" id="loadMsg"></div>
 </div>
 <div class="sticky-footer">
-    <button class="btn btn-primary" data-command="openDashboard"><span class="codicon codicon-graph"></span> Open Full Dashboard</button>
-    <button class="btn btn-primary" data-command="refresh" disabled style="opacity:0.6;"><span class="codicon codicon-sync"></span> Loading\u2026</button>
+    <button class="btn btn-primary" data-command="openDashboard"><span class="codicon codicon-graph"></span> ${vscode.l10n.t('Open Full Dashboard')}</button>
+    <button class="btn btn-primary" data-command="refresh" disabled style="opacity:0.6;"><span class="codicon codicon-sync"></span> ${vscode.l10n.t('Loading\u2026')}</button>
     <div style="padding-top:4px;text-align:center;font-size:8px;color:var(--vscode-descriptionForeground);">
-        <div>\ud83e\udd8a CodeFox \u2014 \ud83d\ude80 Driving AI-Powered Delivery Excellence</div>
+        <div>${vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 \ud83d\ude80 Driving AI-Powered Delivery Excellence')}</div>
     </div>
 </div>
 <script nonce="${loadingNonce}">
 var vscode=acquireVsCodeApi();
 document.addEventListener('click',function(e){var t=e.target.closest('[data-command]');if(t)vscode.postMessage({command:t.getAttribute('data-command')});});
 var msgs=[
-'\ud83e\udd8a Preparing your workspace and tuning AI intelligence for you.',
-'\ud83e\udd8a Turning your data into actionable intelligence\u2026 almost ready.',
-'\ud83e\udd8a Learning your context to assist you smarter.',
-'\ud83e\udd8a Powering up AI boosters for maximum productivity.',
-'\ud83e\udd8a Analyzing patterns and organizing insights behind the scenes.',
-'\ud83e\udd8a Crafting smarter suggestions just for this session.',
-'\ud83e\udd8a Connecting intelligence, automation, and creativity.',
-'\ud83e\udd8a Optimizing your experience\u2026 one smart step at a time.',
-'\ud83e\udd8a Warming up neural engines\u2026 thinking intelligently.',
-'\ud83e\udd8a Tracking the best insights for your workflow.'
+'${vscode.l10n.t('\ud83e\udd8a Preparing your workspace and tuning AI intelligence for you.')}',
+'${vscode.l10n.t('\ud83e\udd8a Turning your data into actionable intelligence\u2026 almost ready.')}',
+'${vscode.l10n.t('\ud83e\udd8a Learning your context to assist you smarter.')}',
+'${vscode.l10n.t('\ud83e\udd8a Powering up AI boosters for maximum productivity.')}',
+'${vscode.l10n.t('\ud83e\udd8a Analyzing patterns and organizing insights behind the scenes.')}',
+'${vscode.l10n.t('\ud83e\udd8a Crafting smarter suggestions just for this session.')}',
+'${vscode.l10n.t('\ud83e\udd8a Connecting intelligence, automation, and creativity.')}',
+'${vscode.l10n.t('\ud83e\udd8a Optimizing your experience\u2026 one smart step at a time.')}',
+'${vscode.l10n.t('\ud83e\udd8a Warming up neural engines\u2026 thinking intelligently.')}',
+'${vscode.l10n.t('\ud83e\udd8a Tracking the best insights for your workflow.')}'
 ];
 var el=document.getElementById('loadMsg');var last=-1;
 if(el){el.textContent=msgs[Math.floor(Math.random()*msgs.length)];}
@@ -199,11 +199,11 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
             console.error('GHCP Sidebar: Error fetching data', err);
             const nonce = getNonce();
             const foxMessages = [
-                '\ud83e\udd8a CodeFox \u2014 Oops, I hit an unexpected trail. Let\u2019s try that again.',
-                '\ud83e\udd8a CodeFox \u2014 Hmm\u2026 something didn\u2019t load as planned. Retrying might help.',
-                '\ud83e\udd8a CodeFox \u2014 I lost the trail for a moment. Reloading should fix it.',
-                '\ud83e\udd8a CodeFox \u2014 Even foxes miss a step sometimes. Let\u2019s reload.',
-                '\ud83e\udd8a CodeFox \u2014 I chased the data\u2026 but it escaped this time. Retry?'
+                vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Oops, I hit an unexpected trail. Let\u2019s try that again.'),
+                vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Hmm\u2026 something didn\u2019t load as planned. Retrying might help.'),
+                vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 I lost the trail for a moment. Reloading should fix it.'),
+                vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Even foxes miss a step sometimes. Let\u2019s reload.'),
+                vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 I chased the data\u2026 but it escaped this time. Retry?')
             ];
             const foxMsg = foxMessages[Math.floor(Math.random() * foxMessages.length)];
             this._view.webview.html = `<!DOCTYPE html><html><head><meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'nonce-${nonce}';"><style>
@@ -218,7 +218,8 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
                 a { color:var(--vscode-textLink-foreground); }
             </style></head><body>
                 <div class="error-icon">⚠️</div>
-                <h3>Dashboard Could Not Load</h3>
+                <h3>${vscode.l10n.t('Sidebar Error')}</h3>
+                <p style="font-size:11px;color:var(--vscode-descriptionForeground);margin:4px 0 8px;">${vscode.l10n.t('Could not load GitHub Copilot Insights Dashboard data')}</p>
                 <div class="error-detail">${escapeHtml(err.message || 'Unknown error')}</div>
                 <div class="help">
                     <strong>What you can try:</strong><br>
@@ -230,7 +231,7 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
                     Please verify the extension version or contact admin:<br>
                     <a href="mailto:sj.techconnect@gmail.com">sj.techconnect@gmail.com</a>
                 </div>
-                <button class="btn" data-command="refresh">↻ Retry</button>
+                <button class="btn" data-command="refresh">↻ ${vscode.l10n.t('Retry')}</button>
                 <script nonce="${nonce}">const vscode=acquireVsCodeApi();document.addEventListener('click',e=>{const t=e.target.closest('[data-command]');if(t)vscode.postMessage({command:t.getAttribute('data-command')});});</script>
             </body></html>`;
         }
@@ -399,29 +400,29 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
     ${noCopilot && noAccounts ? `
         <div class="no-data-banner">
             <span class="codicon codicon-warning"></span>
-            <p><strong>Setup Required</strong></p>
-            <p>Install GitHub Copilot Chat and sign in.</p>
-            <button class="btn btn-primary" data-command="signInGithub"><span class="codicon codicon-sign-in"></span> Sign in to GitHub</button>
+            <p><strong>${vscode.l10n.t('Setup Required')}</strong></p>
+            <p>${vscode.l10n.t('Install GitHub Copilot Chat and sign in.')}</p>
+            <button class="btn btn-primary" data-command="signInGithub"><span class="codicon codicon-sign-in"></span> ${vscode.l10n.t('Sign in to GitHub')}</button>
         </div>
     ` : `
         <!-- This Week's AI Metrics -->
         <div class="section">
-            <div class="section-header" data-section="ai-metrics"><span class="codicon codicon-graph"></span> AI Metrics — ${weekLabel}<span class="chevron"></span></div>
+            <div class="section-header" data-section="ai-metrics"><span class="codicon codicon-graph"></span> ${vscode.l10n.t('AI Metrics')} — ${weekLabel}<span class="chevron"></span></div>
             <div class="section-body" data-section-body="ai-metrics">
-            ${!aiStatsEnabled ? `<div style="background:var(--ghcp-subtle-bg);border:1px solid var(--vscode-panel-border);border-radius:6px;padding:6px 8px;margin-bottom:6px;font-size:10px;display:flex;align-items:flex-start;gap:6px"><span class="codicon codicon-warning" style="color:var(--ghcp-warning);flex-shrink:0;margin-top:1px"></span><div><strong style="color:var(--ghcp-warning)">AI Stats disabled</strong><br><a href="#" data-command="openSettings" style="color:var(--ghcp-warning);text-decoration:underline;cursor:pointer">Open Settings</a> to enable <code>editor.aiStats.enabled</code>.</div></div>` : ''}
+            ${!aiStatsEnabled ? `<div style="background:var(--ghcp-subtle-bg);border:1px solid var(--vscode-panel-border);border-radius:6px;padding:6px 8px;margin-bottom:6px;font-size:10px;display:flex;align-items:flex-start;gap:6px"><span class="codicon codicon-warning" style="color:var(--ghcp-warning);flex-shrink:0;margin-top:1px"></span><div><strong style="color:var(--ghcp-warning)">${vscode.l10n.t('AI Stats disabled')}</strong><br><a href="#" data-command="openSettings" style="color:var(--ghcp-warning);text-decoration:underline;cursor:pointer">${vscode.l10n.t('Open Settings')}</a> ${vscode.l10n.t('to enable')} <code>editor.aiStats.enabled</code>.</div></div>` : ''}
             ${weekStats.length > 0 ? `
                 <div class="stat-grid">
-                    <div class="stat-card"><div class="stat-val" style="color:var(--ghcp-success)">${weekPct}%</div><div class="stat-lbl">AI Rate</div></div>
-                    <div class="stat-card"><div class="stat-val">${weekSessions}</div><div class="stat-lbl">Sessions</div></div>
-                    <div class="stat-card"><div class="stat-val">${weekSuggestions}</div><div class="stat-lbl">Suggestions</div></div>
-                    <div class="stat-card"><div class="stat-val">${weekChatEdits}</div><div class="stat-lbl">Chat Edits</div></div>
+                    <div class="stat-card"><div class="stat-val" style="color:var(--ghcp-success)">${weekPct}%</div><div class="stat-lbl">${vscode.l10n.t('AI Rate')}</div></div>
+                    <div class="stat-card"><div class="stat-val">${weekSessions}</div><div class="stat-lbl">${vscode.l10n.t('Sessions')}</div></div>
+                    <div class="stat-card"><div class="stat-val">${weekSuggestions}</div><div class="stat-lbl">${vscode.l10n.t('Suggestions')}</div></div>
+                    <div class="stat-card"><div class="stat-val">${weekChatEdits}</div><div class="stat-lbl">${vscode.l10n.t('Chat Edits')}</div></div>
                 </div>
-                <div class="stat-row"><span class="stat-row-label">AI Characters</span><span class="stat-row-val">${weekAi.toLocaleString()}</span></div>
-                <div class="stat-row"><span class="stat-row-label">Typed Characters</span><span class="stat-row-val">${weekTyped.toLocaleString()}</span></div>
-                <div class="stat-row"><span class="stat-row-label">Active Days</span><span class="stat-row-val">${weekDaysWithData} / 7</span></div>
+                <div class="stat-row"><span class="stat-row-label">${vscode.l10n.t('AI Characters')}</span><span class="stat-row-val">${weekAi.toLocaleString()}</span></div>
+                <div class="stat-row"><span class="stat-row-label">${vscode.l10n.t('Typed Characters')}</span><span class="stat-row-val">${weekTyped.toLocaleString()}</span></div>
+                <div class="stat-row"><span class="stat-row-label">${vscode.l10n.t('Active Days')}</span><span class="stat-row-val">${weekDaysWithData} / 7</span></div>
                 <div class="ai-bar"><div class="ai-bar-fill" style="width:${Math.round(weekDaysWithData / 7 * 100)}%;background:${weekDaysWithData >= 5 ? 'var(--ghcp-success)' : weekDaysWithData >= 3 ? 'var(--ghcp-info)' : 'var(--ghcp-warning)'};"></div></div>
                 <div class="ai-bar" style="margin-top:3px;"><div class="ai-bar-fill" style="width:${weekPct}%"></div></div>
-            ` : `<div class="empty-state" style="padding:6px;font-size:10px;">${aiStatsEnabled ? 'No data this week' : 'No data — AI Stats collection is off'}</div>`}
+            ` : `<div class="empty-state" style="padding:6px;font-size:10px;">${aiStatsEnabled ? vscode.l10n.t('No data this week') : vscode.l10n.t('No data — AI Stats collection is off')}</div>`}
             </div>
         </div>
 
@@ -430,11 +431,11 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
             <div class="section-header" data-section="copilot-chat"><span class="codicon codicon-comment-discussion"></span> Copilot Chat<span class="chevron"></span></div>
             <div class="section-body" data-section-body="copilot-chat">
             ${chatInstalled ? `
-                <div class="copilot-row"><span class="copilot-label">Version</span><span class="copilot-value">${data.copilot.copilotChat.version}</span></div>
-                <div class="copilot-row"><span class="copilot-label">Status</span><span class="copilot-value">${data.copilot.copilotChat.active ? '<span class="status-dot active"></span> Active' : '<span class="status-dot inactive"></span> Inactive'}</span></div>
-                <div class="copilot-row"><span class="copilot-label">Last Used</span><span class="copilot-value">${data.activeCopilotAccount ? escapeHtml(data.activeCopilotAccount.label) + ' <span style="opacity:0.55;font-size:0.8em;">(' + escapeHtml(data.activeCopilotAccount.provider) + ')</span>' : '<em>Not signed in</em>'}</span></div>
-                <div class="copilot-row"><span class="copilot-label">Workspace</span><span class="copilot-value" style="font-size:9px;" title="${escapeHtml(data.workspace.name)}">${escapeHtml(data.workspace.name)}</span></div>
-            ` : `<div class="empty-state" style="padding:6px;font-size:10px;">Not installed</div>`}
+                <div class="copilot-row"><span class="copilot-label">${vscode.l10n.t('Version')}</span><span class="copilot-value">${data.copilot.copilotChat.version}</span></div>
+                <div class="copilot-row"><span class="copilot-label">${vscode.l10n.t('Status')}</span><span class="copilot-value">${data.copilot.copilotChat.active ? '<span class="status-dot active"></span> ' + vscode.l10n.t('Active') : '<span class="status-dot inactive"></span> ' + vscode.l10n.t('Inactive')}</span></div>
+                <div class="copilot-row"><span class="copilot-label">${vscode.l10n.t('Last Used')}</span><span class="copilot-value">${data.activeCopilotAccount ? escapeHtml(data.activeCopilotAccount.label) + ' <span style="opacity:0.55;font-size:0.8em;">(' + escapeHtml(data.activeCopilotAccount.provider) + ')</span>' : '<em>' + vscode.l10n.t('Not signed in') + '</em>'}</span></div>
+                <div class="copilot-row"><span class="copilot-label">${vscode.l10n.t('Workspace')}</span><span class="copilot-value" style="font-size:9px;" title="${escapeHtml(data.workspace.name)}">${escapeHtml(data.workspace.name)}</span></div>
+            ` : `<div class="empty-state" style="padding:6px;font-size:10px;">${vscode.l10n.t('Not installed')}</div>`}
             </div>
         </div>
 
@@ -444,10 +445,11 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
             const recentSessions = currentWsSessions.slice(0, 5);
             return `
         <div class="section">
-            <div class="section-header" data-section="recent-sessions"><span class="codicon codicon-history"></span> Recent Chat Sessions <span class="sidebar-info-icon" style="display:inline-flex;align-items:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:var(--vscode-badge-background);color:var(--vscode-badge-foreground);font-size:9px;font-weight:700;cursor:help;" title="Shows recent Copilot Chat sessions from the current workspace. Click Open to resume a session.">?</span></span><span class="chevron" style="margin-left:auto;"></span></div>
+            <div class="section-header" data-section="recent-sessions"><span class="codicon codicon-history"></span> ${vscode.l10n.t('Recent Chat Sessions')} <span class="sidebar-info-icon" style="display:inline-flex;align-items:center;"><span style="display:inline-flex;align-items:center;justify-content:center;width:14px;height:14px;border-radius:50%;background:var(--vscode-badge-background);color:var(--vscode-badge-foreground);font-size:9px;font-weight:700;cursor:help;" title="${vscode.l10n.t('Shows recent Copilot Chat sessions from the current workspace. Click Open to resume a session.')}">?</span></span><span class="chevron" style="margin-left:auto;"></span></div>
             <div class="section-body" data-section-body="recent-sessions">
-            ${recentSessions.length === 0 ? `<div class="empty-state" style="padding:6px;font-size:10px;">No sessions in this workspace</div>` : recentSessions.map(s => {
-                const title = escapeHtml(s.title || 'Untitled Session');
+            ${recentSessions.length === 0 ? `<div class="empty-state" style="padding:6px;font-size:10px;">${vscode.l10n.t('No sessions in this workspace')}</div>` : recentSessions.map(s => {
+                const title = escapeHtml(s.title || vscode.l10n.t('Untitled Session'));
+                const typeLabel = (s.chatType === 'agent' || s.source === 'agentSession') ? 'Agent' : s.chatType === 'ask' ? 'Ask' : 'Chat';
                 const typeLabel = (s.chatType === 'agent' || s.source === 'agentSession') ? 'Agent' : s.chatType === 'ask' ? 'Ask' : 'Chat';
                 const dateObj = new Date(s.lastMessageDate || s.creationDate);
                 const timeAgo = (() => { const d = Date.now() - dateObj.getTime(); if (d < 60000) return 'just now'; if (d < 3600000) return Math.floor(d / 60000) + 'm ago'; if (d < 86400000) return Math.floor(d / 3600000) + 'h ago'; return Math.floor(d / 86400000) + 'd ago'; })();
@@ -489,8 +491,8 @@ setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}whil
 </div>
 <div class="sticky-footer">
     <div class="actions" style="margin-top:0;">
-        <button class="btn btn-primary" data-command="openDashboard"><span class="codicon codicon-graph"></span> Open Full Dashboard</button>
-        <button class="btn btn-primary" data-command="refresh"><span class="codicon codicon-refresh"></span> Refresh</button>
+        <button class="btn btn-primary" data-command="openDashboard"><span class="codicon codicon-graph"></span> ${vscode.l10n.t('Open Full Dashboard')}</button>
+        <button class="btn btn-primary" data-command="refresh"><span class="codicon codicon-refresh"></span> ${vscode.l10n.t('Refresh')}</button>
     </div>
     <div class="timestamp" data-updated-at="${data.timestamp}" title="&#x1f7e2; Green = Data is fresh (under 5 min)&#10;&#x1f7e0; Amber = Data may be stale (over 5 min) &#8212; click Refresh to update"><span class="freshness-dot" id="freshnessDot"></span>Updated: ${new Date(data.timestamp).toLocaleTimeString()}</div>
     <div style="margin:6px 0 4px;text-align:center;font-size:10px;color:var(--vscode-descriptionForeground);font-style:italic;line-height:1.5;">

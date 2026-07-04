@@ -145,21 +145,17 @@ class DashboardPanel {
 
         // Show loading screen with random AI inspiration message
         const loadingMessages = [
-            '🦊 CodeFox — Preparing your workspace and tuning AI intelligence for you.',
-            '🦊 CodeFox — Turning your data into actionable intelligence… almost ready.',
-            '🦊 CodeFox — Learning your context to assist you smarter.',
-            '🦊 CodeFox — Powering up AI boosters for maximum productivity.',
-            '🦊 CodeFox — Great work begins with intelligent assistance. Getting things ready.',
-            '🦊 CodeFox — Analyzing patterns and organizing insights behind the scenes.',
-            '🦊 CodeFox — Crafting smarter suggestions just for this session.',
-            '🦊 CodeFox — Transforming complexity into developer clarity.',
-            '🦊 CodeFox — Connecting intelligence, automation, and creativity.',
-            '🦊 CodeFox — Optimizing your experience… one smart step at a time.',
-            '🦊 CodeFox — Warming up neural engines… thinking intelligently.',
-            '🦊 CodeFox — Tracking the best insights for your workflow.',
-            '🦊 CodeFox — Assembling AI assistance modules.',
-            '🦊 CodeFox — Exploring smarter paths to help you faster.',
-            '🦊 CodeFox — Preparing intelligent recommendations for you.'
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Preparing your workspace and tuning AI intelligence for you.'),
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Turning your data into actionable intelligence\u2026 almost ready.'),
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Learning your context to assist you smarter.'),
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Powering up AI boosters for maximum productivity.'),
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Analyzing patterns and organizing insights behind the scenes.'),
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Crafting smarter suggestions just for this session.'),
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Connecting intelligence, automation, and creativity.'),
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Optimizing your experience\u2026 one smart step at a time.'),
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Warming up neural engines\u2026 thinking intelligently.'),
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Exploring smarter paths to help you faster.'),
+            vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Preparing intelligent recommendations for you.')
         ];
         const loadingMsg = loadingMessages[Math.floor(Math.random() * loadingMessages.length)];
         const loadingMsgsJson = JSON.stringify(loadingMessages);
@@ -179,9 +175,9 @@ class DashboardPanel {
         </style></head><body>
             <div class="loader-container">
                 <div class="loader"><span class="fox-icon">🦊</span></div>
-                <div class="title">Loading GitHub Copilot Insights Dashboard<span class="dots"></span></div>
+                <div class="title">${vscode.l10n.t('Loading GitHub Copilot Insights Dashboard')}<span class="dots"></span></div>
                 <div class="msg" id="loadMsg">${loadingMsg}</div>
-                <div class="sub">Fetching accounts, sessions, AI stats, models & MCP data</div>
+                <div class="sub">${vscode.l10n.t('Fetching accounts, sessions, AI stats, models & MCP data')}</div>
             </div>
             <script nonce="${loadingNonce}">var msgs=${loadingMsgsJson};var el=document.getElementById('loadMsg');var last=-1;setInterval(function(){var idx;do{idx=Math.floor(Math.random()*msgs.length)}while(idx===last&&msgs.length>1);last=idx;el.style.opacity='0';setTimeout(function(){el.textContent=msgs[idx];el.style.opacity='1'},300)},2000);</script>
         </body></html>`;
@@ -192,11 +188,11 @@ class DashboardPanel {
         } catch (err) {
             console.error('GHCP Dashboard: Error fetching data', err);
             const foxMessages = [
-                '\ud83e\udd8a CodeFox \u2014 Oops, I hit an unexpected trail. Let\u2019s try that again.',
-                '\ud83e\udd8a CodeFox \u2014 Hmm\u2026 something didn\u2019t load as planned. Retrying might help.',
-                '\ud83e\udd8a CodeFox \u2014 I lost the trail for a moment. Reloading should fix it.',
-                '\ud83e\udd8a CodeFox \u2014 Even foxes miss a step sometimes. Let\u2019s reload.',
-                '\ud83e\udd8a CodeFox \u2014 I chased the data\u2026 but it escaped this time. Retry?'
+                vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Oops, I hit an unexpected trail. Let\u2019s try that again.'),
+                vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Hmm\u2026 something didn\u2019t load as planned. Retrying might help.'),
+                vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 I lost the trail for a moment. Reloading should fix it.'),
+                vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 Even foxes miss a step sometimes. Let\u2019s reload.'),
+                vscode.l10n.t('\ud83e\udd8a CodeFox \u2014 I chased the data\u2026 but it escaped this time. Retry?')
             ];
             const foxMsg = foxMessages[Math.floor(Math.random() * foxMessages.length)];
             this._panel.webview.html = `<!DOCTYPE html>
@@ -216,19 +212,20 @@ class DashboardPanel {
 </style></head><body>
 <div class="error-card">
     <div class="error-icon">⚠</div>
-    <h2>Dashboard Could Not Load</h2>
+    <h2>${vscode.l10n.t('Dashboard Could Not Load')}</h2>
     <div class="fox-msg">${foxMsg}</div>
-    <p>An error occurred while gathering your account and usage data. This extension works <strong>entirely offline</strong> using local VS Code data — no internet connection is required.</p>
+    <p>${vscode.l10n.t('An error occurred while gathering your account and usage data. This extension works entirely offline using local VS Code data — no internet connection is required.')}</p>
     <div class="error-detail">${err.message || 'Unknown error'}</div>
     <div class="info-box">
-        <strong>What you can try:</strong><br>
-        • Click <strong>Retry</strong> to reload the dashboard<br>
-        • Restart VS Code (<code>Ctrl+Shift+P</code> → <code>Developer: Reload Window</code>)<br>
-        • Ensure GitHub Copilot Chat extension is installed<br>
-        • Check that <code>editor.aiStats.enabled</code> is set to <code>true</code> in settings<br><br>
-        <strong>Still having issues?</strong> Contact: <a href="mailto:sj.techconnect@gmail.com">sj.techconnect@gmail.com</a>
+        <strong>${vscode.l10n.t('What you can try:')}</strong><br>
+        • ${vscode.l10n.t('Click Retry to reload the dashboard')}<br>
+        • ${vscode.l10n.t('Restart VS Code (Ctrl+Shift+P → Developer: Reload Window)')}<br>
+        • ${vscode.l10n.t('Ensure GitHub Copilot Chat extension is installed')}<br>
+        • ${vscode.l10n.t('Check that editor.aiStats.enabled is set to true in settings')}<br><br>
+        <strong>${vscode.l10n.t('Still having issues?')}</strong><br>
+        ${vscode.l10n.t('Contact')}: <a href="mailto:sj.techconnect@gmail.com">sj.techconnect@gmail.com</a>
     </div>
-    <button class="btn btn-primary" id="retryBtn">↻ Retry</button>
+    <button class="btn btn-primary" id="retryBtn">↻ ${vscode.l10n.t('Retry')}</button>
 </div>
 <script>const vscode=acquireVsCodeApi();document.getElementById('retryBtn').addEventListener('click',()=>vscode.postMessage({command:'refresh'}));</script>
 </body></html>`;
@@ -283,17 +280,17 @@ class DashboardPanel {
             noDataHtml = `
             <div class="full-empty-state">
                 <div class="empty-icon-large"><span class="codicon codicon-github"></span></div>
-                <h2>GitHub Copilot is Not Set Up</h2>
-                <p>No Copilot extensions installed and no accounts are linked to this VS Code instance.</p>
-                <p>To get started:</p>
+                <h2>${vscode.l10n.t('GitHub Copilot is Not Set Up')}</h2>
+                <p>${vscode.l10n.t('No Copilot extensions installed and no accounts are linked to this VS Code instance.')}</p>
+                <p>${vscode.l10n.t('To get started:')}</p>
                 <ol>
-                    <li>Install <strong>GitHub Copilot</strong> and <strong>GitHub Copilot Chat</strong> extensions</li>
-                    <li>Sign in with your GitHub account</li>
-                    <li>Optionally, link a Microsoft account for MCP servers</li>
+                    <li>${vscode.l10n.t('Install GitHub Copilot and GitHub Copilot Chat extensions')}</li>
+                    <li>${vscode.l10n.t('Sign in with your GitHub account')}</li>
+                    <li>${vscode.l10n.t('Optionally, link a Microsoft account for MCP servers')}</li>
                 </ol>
                 <div class="empty-actions">
-                    <button class="btn btn-primary" data-command="signInGithub"><span class="codicon codicon-sign-in"></span> Sign in to GitHub</button>
-                    <button class="btn btn-secondary" data-command="manageAccounts"><span class="codicon codicon-settings-gear"></span> Manage Accounts</button>
+                    <button class="btn btn-primary" data-command="signInGithub"><span class="codicon codicon-sign-in"></span> ${vscode.l10n.t('Sign in to GitHub')}</button>
+                    <button class="btn btn-secondary" data-command="manageAccounts"><span class="codicon codicon-settings-gear"></span> ${vscode.l10n.t('Manage Accounts')}</button>
                 </div>
             </div>`;
         }
@@ -311,22 +308,22 @@ class DashboardPanel {
 <div class="dashboard">
     <header class="header">
         <div class="header-left">
-            <h1 class="title"><img src="${iconUri}" alt="GHCP" style="width:24px;height:24px;vertical-align:middle;margin-right:6px;border-radius:4px;"> GitHub Copilot Insights Dashboard</h1>
-            <span class="subtitle">Accounts, Copilot extensions, MCP servers, models &amp; tools</span>
+            <h1 class="title"><img src="${iconUri}" alt="GHCP" style="width:24px;height:24px;vertical-align:middle;margin-right:6px;border-radius:4px;"> ${vscode.l10n.t('GitHub Copilot Insights Dashboard')}</h1>
+            <span class="subtitle">${vscode.l10n.t('Accounts, Copilot extensions, MCP servers, models & tools')}</span>
         </div>
         <div class="header-right">
-            <button class="btn btn-primary" id="refreshBtn" data-command="refresh" title="Refresh Dashboard"><span class="codicon codicon-refresh" id="refreshIcon"></span> <span id="refreshText">Refresh</span></button>
+            <button class="btn btn-primary" id="refreshBtn" data-command="refresh" title="${vscode.l10n.t('Refresh Dashboard')}"><span class="codicon codicon-refresh" id="refreshIcon"></span> <span id="refreshText">${vscode.l10n.t('Refresh')}</span></button>
         </div>
     </header>
 
     ${(noCopilot && noAccounts) ? noDataHtml : `
     <nav class="tabs">
-        <button class="tab active" data-tab="copilot"><span class="codicon codicon-github"></span> Overview</button>
-        <button class="tab" data-tab="sessions"><span class="codicon codicon-comment-discussion"></span> Chat Sessions</button>
-        <button class="tab" data-tab="aistats"><span class="codicon codicon-graph-line"></span> AI Stats</button>
-        <button class="tab" data-tab="accounts"><span class="codicon codicon-account"></span> Accounts</button>
-        <button class="tab" data-tab="infra"><span class="codicon codicon-server"></span> Models &amp; MCP</button>
-        <button class="tab" data-tab="info"><span class="codicon codicon-info"></span> Info</button>
+        <button class="tab active" data-tab="copilot"><span class="codicon codicon-github"></span> ${vscode.l10n.t('Overview')}</button>
+        <button class="tab" data-tab="sessions"><span class="codicon codicon-comment-discussion"></span> ${vscode.l10n.t('Chat Sessions')}</button>
+        <button class="tab" data-tab="aistats"><span class="codicon codicon-graph-line"></span> ${vscode.l10n.t('AI Stats')}</button>
+        <button class="tab" data-tab="accounts"><span class="codicon codicon-account"></span> ${vscode.l10n.t('Accounts')}</button>
+        <button class="tab" data-tab="infra"><span class="codicon codicon-server"></span> ${vscode.l10n.t('Models & MCP')}</button>
+        <button class="tab" data-tab="info"><span class="codicon codicon-info"></span> ${vscode.l10n.t('Info')}</button>
     </nav>
 
     <div class="tab-content">
