@@ -2,5 +2,5 @@ node_modules/
 .vscode-test/
 *.vsix
 .vsixmanifest
-test_*.js
+/test_*.js
 flycheck*/
